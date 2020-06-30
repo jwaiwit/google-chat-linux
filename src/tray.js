@@ -23,12 +23,12 @@ const buildContextMenu = (mainWindow) => {
 			label: 'Force reload', click: function () {
 				WindowManager.onForceReloadClicked();
 			}
-		}, {
-			"label": WindowManager.getIsThemed() ? "Remove theme (restart)" : "Apply theme",
-			"click": () => {
-				WindowManager.onToggleThemeClicked();
-				buildContextMenu();
-			}
+		// }, {
+		// 	"label": WindowManager.getIsThemed() ? "Remove theme (restart)" : "Apply theme",
+		// 	"click": () => {
+		// 		WindowManager.onToggleThemeClicked();
+		// 		buildContextMenu();
+		// 	}
 		}, {
 			type: 'separator'
         }, {

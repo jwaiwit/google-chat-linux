@@ -6,7 +6,7 @@ let mainWindow;
 let isQuitting = false;
 let keepMinimized = true;
 let startHidden = true;
-let isThemed = false;
+let isThemed = true;
 let enableKeyboardShortcuts = false;
 
 ipcMain.on('open-link', (evt, href) => {
@@ -223,10 +223,10 @@ const getStartHiddenTick = () => {
 const buildMenu = (mainWindow) => {
 	const template = [
 		{
-			label: 'Menu',
+			label: '&Menu',
 			submenu: [
 				{
-					label: 'Force reload', 
+					label: '&Force reload', 
 					click: () => {
 						onForceReloadClicked();
 					}
@@ -235,7 +235,7 @@ const buildMenu = (mainWindow) => {
 					click: () => {
 						onToggleThemeClicked();
 					}
-				// }, {
+				//}, {
 				// 	label: getEnableKeyboardShortcuts() ? "Disable alt left/right shortcuts (restart)" : "Enable alt left/right shortcuts (restart)",
 				// 	click: () => {
 				// 		onToggleKeyboardShortcuts();
@@ -243,7 +243,7 @@ const buildMenu = (mainWindow) => {
 				// }, {
 				// 	type: 'separator'
 				}, {
-					label: "Quit",
+					label: '&Quit',
 					accelerator: 'CommandOrControl+Q',
 					click: () => {
 						onQuitEntryClicked();
@@ -251,7 +251,7 @@ const buildMenu = (mainWindow) => {
 				}
 			]
 		},{
-			label: 'View',
+			label: '&View',
 			submenu: [
 				{
 					label: getHideTick() + ' Hide from windows list when minimized (restart)', 
@@ -273,17 +273,17 @@ const buildMenu = (mainWindow) => {
 				}
 			]
 		},{
-			label: 'About',
+			label: '&About',
 			submenu: [
 				{
-					label: app.name + ' '+ app.getVersion() 
+					label: '&'+app.name + ' '+ app.getVersion() 
 				},{
-					label: 'electron '+process.versions.electron
+					label: '&electron '+process.versions.electron
 				}
 
 			]
 		},{
-			label: 'DevTools',
+			label: '&DevTools',
 			accelerator: 'CommandOrControl+Shift+I',
 			click: () => {
 				mainWindow.webContents.openDevTools();;
