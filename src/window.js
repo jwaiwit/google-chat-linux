@@ -155,8 +155,15 @@ const initializeWindow = (config) => {
 	mainWindow.loadURL(extraOptions.url);
 
 	mainWindow.once('ready-to-show', () => {
-		handleTheme(mainWindow);
+		handleTheme(mainWindow);		
 	});
+
+
+	mainWindow.webContents.on('dom-ready', () => {
+		const customScriptUrl = fs.readFileSync(pathsManifest.customScriptUrl, 'utf8');
+		mainWindow.webContents.executeJavaScript(customScriptUrl, true, () => {});
+		
+	})
 
 	mainWindow.on('close', (e) => {
 		if(isQuitting){
@@ -228,13 +235,13 @@ const buildMenu = (mainWindow) => {
 					click: () => {
 						onToggleThemeClicked();
 					}
-				}, {
-					label: getEnableKeyboardShortcuts() ? "Disable alt left/right shortcuts (restart)" : "Enable alt left/right shortcuts (restart)",
-					click: () => {
-						onToggleKeyboardShortcuts();
-					}
-				}, {
-					type: 'separator'
+				// }, {
+				// 	label: getEnableKeyboardShortcuts() ? "Disable alt left/right shortcuts (restart)" : "Enable alt left/right shortcuts (restart)",
+				// 	click: () => {
+				// 		onToggleKeyboardShortcuts();
+				// 	}
+				// }, {
+				// 	type: 'separator'
 				}, {
 					label: "Quit",
 					accelerator: 'CommandOrControl+Q',

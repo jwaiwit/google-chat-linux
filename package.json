@@ -14,12 +14,14 @@
   "license": "WTFPL",
   "build": {
     "appId": "Google Chat Linux",
+    "asar": false,
     "linux": {
       "desktop": {
         "Name": "Google Chat Linux"
       },
       "category": "Network;InstantMessaging",
       "target": [
+	   "appimage",
         "deb"
       ]
     }
