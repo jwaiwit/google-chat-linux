@@ -135,11 +135,15 @@ const handleTheme = (mainWindow) => {
 
 const handleRedirect = (e, url) => {
 	// leave redirect for double auth mechanisme, trap crappy blocked url link
-	if (url == "about:blank#blocked") {
-s
+	if (url == "about:blank#blocked" || url == "about:blank") {		
+        e.preventDefault();
 	} else if (! url.includes("accounts/SetOSID?authuser=0&continue=https%3A%2F%2Fchat.google.com")){
-		shell.openExternal(url);
+		const checkString = "https://chat.google.com/api/get_attachment_url"
+		if (url.includes(checkString)) {
+			url = url.replace(checkString, "https://chat.google.com/u/1/api/get_attachment_url")
+		}
 		e.preventDefault();
+		shell.openExternal(url);
 	}
 };
 
