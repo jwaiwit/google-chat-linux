@@ -3,6 +3,9 @@ const pathsManifest = require("./paths");
 const WindowManager = require('./window');
 let mainWindow;
 let systemTrayIcon;
+let currentState;
+let iconTicking = 0; 
+let blinkIconTimer;
 
 const onShowEntryClicked = () => {
 	(! mainWindow.isVisible() || mainWindow.isMinimized()) ? mainWindow.show() : mainWindow.hide();
@@ -72,10 +75,33 @@ const initializeTray = (windowObj) => {
 
 };
 
+const blinkIcon = () => {
+	if (blinkIconTimer) {
+		clearTimeout(blinkIconTimer);
+		blinkIconTimer = null;
+	}
+
+	if(currentState != "NORMAL") {
+		blinkIconTimer = setTimeout(() => {
+			iconTicking++
+
+			if (iconTicking % 2) {
+				setIcon(currentState);
+			}
+			else {
+				setIcon("OFFLINE");
+			}
+
+			blinkIcon();
+		}, 800);
+	}
+};
+
 ipcMain.on('favicon-changed', (evt, href) => {
 	var itype = "";
 	if (href.match(/chat-favicon-no-new/)) {
 		itype = "NORMAL";
+		iconTicking = 0; 
 	}else if (href.match(/chat-favicon-new-non-notif/)) {
 		itype = "UNREAD";
 	}else if (href.match(/chat-favicon-new-notif/)) {
@@ -83,7 +109,14 @@ ipcMain.on('favicon-changed', (evt, href) => {
 	}else if (href.match(/^data:image\/png;base64,iVBOR.+/)) {
 		itype = "OFFLINE";
 	}
+
+	currentState = itype;	
+	if (currentState != "NORMAL") {
+		blinkIcon();
+	}
+
 	setIcon(itype);
+
 });
 
 function iconForType(iconType) {
