@@ -69,7 +69,8 @@ const onToggleKeyboardShortcuts = () => {
 }
 
 const onForceReloadClicked = () => {
-	mainWindow.webContents.reload();
+	app.relaunch();
+	onQuitEntryClicked();
 }
 
 const updateIcon = (icon) => {
