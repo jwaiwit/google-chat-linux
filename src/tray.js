@@ -8,7 +8,7 @@ let iconTicking = 0;
 let blinkIconTimer;
 
 const onShowEntryClicked = () => {
-	(! mainWindow.isVisible() || mainWindow.isMinimized()) ? mainWindow.show() : mainWindow.hide();
+	(! mainWindow.isVisible() || mainWindow.isMinimized()) ? mainWindow.show() : mainWindow.minimize();
 }
 
 const onSystemTrayIconClicked = () => {
